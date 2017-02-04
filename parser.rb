@@ -91,10 +91,7 @@ ips = Array.new
 doc.search('ip').each do |link|
         ips.concat link.content.split(",")
 end
-#puts ips.inspect
-
-#ips = ips.sort_by { |ip| ip.split(".").map(&:to_i) }
-ips.uniq!.sort_by { |ip| ip.split(".").map(&:to_i) }
+ips.uniq!
 ips.each {|ip| @provider_ip.puts ip}
 
 doc.search('url').each do |link|
