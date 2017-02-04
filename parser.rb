@@ -92,20 +92,22 @@ doc.search('ip').each do |link|
 end
 
 doc.search('url').each do |link|
-        mas = link.content
-        case
-        when mas["http://"]
-             mas["http://"] = ""
-        provider(mas)
-        @provider_http.puts mas
-        when mas["https://"]
-             mas["https://"] = ""
-        provider(mas)
-        @provider_https.puts mas
+        links = link.content.gsub(",http","\nhttp").split("\n")
+        links.each do |mas|
+            case
+            when mas["http://"]
+                 mas["http://"] = ""
+            provider(mas)
+            @provider_http.puts mas
+            when mas["https://"]
+                 mas["https://"] = ""
+            provider(mas)
+            @provider_https.puts mas
 
-        else
-        provider(mas)
+            else
+            provider(mas)
 
+            end
         end
 end
 
