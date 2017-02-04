@@ -87,9 +87,15 @@ doc = Nokogiri::XML(f) do |config|
         config.strict.nonet
 end
 
+ips = Array.new
 doc.search('ip').each do |link|
-         @provider_ip.puts link.content.gsub(",","\n")
+        ips.concat link.content.split(",")
 end
+#puts ips.inspect
+
+#ips = ips.sort_by { |ip| ip.split(".").map(&:to_i) }
+ips.uniq!.sort_by { |ip| ip.split(".").map(&:to_i) }
+ips.each {|ip| @provider_ip.puts ip}
 
 doc.search('url').each do |link|
         links = link.content.gsub(",http","\nhttp").split("\n")
