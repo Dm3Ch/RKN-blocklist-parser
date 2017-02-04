@@ -2,7 +2,7 @@
 require 'nokogiri'
 require 'uri'
 f = File.open("dump.xml")
-#provider_ip = File.open("ip.provider","w")
+
 provider_all  = File.open("dump-all.provider","w")
 @provider_urls = File.open("urls.provider","w")
 @provider_domains = File.open("domains.provider","w")
@@ -17,6 +17,7 @@ def encode_urls (u)
 #       @provider_urls.puts URI.unescape(u) 
 
 end
+
 def line_domain(d)
         if d["/"]
                 then 
@@ -28,6 +29,7 @@ def line_domain(d)
                   @provider_domains.puts d
         end
 end
+
 def www_domain(d)
         if  d["www."] 
                 then 
@@ -37,6 +39,7 @@ def www_domain(d)
                   @provider_domains.puts d
         end
 end
+
 def provider(urls)
                 i = 1 
                 k  = urls.index(/\//).to_i
@@ -85,7 +88,7 @@ doc = Nokogiri::XML(f) do |config|
 end
 
 doc.search('ip').each do |link|
-         @provider_ip.puts link.content
+         @provider_ip.puts link.content.gsub(",","\n")
 end
 
 doc.search('url').each do |link|
